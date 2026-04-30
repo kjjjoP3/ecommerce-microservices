@@ -1,0 +1,252 @@
+{
+  "info": {
+    "_postman_id": "3f520770-f4fd-4af0-a0f8-334e2f06a41b",
+    "name": "Ecommerce Microservices API",
+    "description": "Collection de test cho he thong e-commerce microservices.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "01 - Auth",
+      "item": [
+        {
+          "name": "Login (save JWT)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData && jsonData.accessToken) {",
+                  "  pm.collectionVariables.set('jwtToken', jsonData.accessToken);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"password\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/api/v1/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "02 - Product",
+      "item": [
+        {
+          "name": "Get Products (Bearer token)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwtToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/products/api/v1/products",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "products",
+                "api",
+                "v1",
+                "products"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "03 - Order Flow",
+      "item": [
+        {
+          "name": "Create Order (reserve + pay + event)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwtToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/orders/api/v1/orders?productId=101&quantity=1&amount=49.99",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "orders",
+                "api",
+                "v1",
+                "orders"
+              ],
+              "query": [
+                {
+                  "key": "productId",
+                  "value": "101"
+                },
+                {
+                  "key": "quantity",
+                  "value": "1"
+                },
+                {
+                  "key": "amount",
+                  "value": "49.99"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Order Failed (amount <= 0)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwtToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/orders/api/v1/orders?productId=101&quantity=1&amount=0",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "orders",
+                "api",
+                "v1",
+                "orders"
+              ],
+              "query": [
+                {
+                  "key": "productId",
+                  "value": "101"
+                },
+                {
+                  "key": "quantity",
+                  "value": "1"
+                },
+                {
+                  "key": "amount",
+                  "value": "0"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "04 - Direct Services (optional)",
+      "item": [
+        {
+          "name": "Inventory Reserve (direct 8084)",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "http://localhost:8084/api/v1/inventory/reserve/101?quantity=1",
+              "host": [
+                "http://localhost:8084"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "inventory",
+                "reserve",
+                "101"
+              ],
+              "query": [
+                {
+                  "key": "quantity",
+                  "value": "1"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Payment Process (direct 8086)",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "http://localhost:8086/api/v1/payments/process?orderId=1&amount=49.99",
+              "host": [
+                "http://localhost:8086"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "payments",
+                "process"
+              ],
+              "query": [
+                {
+                  "key": "orderId",
+                  "value": "1"
+                },
+                {
+                  "key": "amount",
+                  "value": "49.99"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8088"
+    },
+    {
+      "key": "jwtToken",
+      "value": ""
+    }
+  ]
+}

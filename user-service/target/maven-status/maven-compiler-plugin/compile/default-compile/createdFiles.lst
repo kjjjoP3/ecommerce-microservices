@@ -1,0 +1,7 @@
+com\ecommerce\user\dto\UserResponse.class
+com\ecommerce\user\entity\UserProfile.class
+com\ecommerce\user\service\impl\UserServiceImpl.class
+com\ecommerce\user\service\UserService.class
+com\ecommerce\user\controller\UserController.class
+com\ecommerce\user\repository\UserProfileRepository.class
+com\ecommerce\user\UserServiceApplication.class

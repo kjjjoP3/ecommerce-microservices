@@ -1,0 +1,24 @@
+server: { port: 8085 }
+spring:
+  application: { name: order-service }
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521:XE
+    username: ECOM
+    password: ECOMPass123
+    driver-class-name: oracle.jdbc.OracleDriver
+  jpa:
+    hibernate: { ddl-auto: none }
+    properties: { hibernate.dialect: org.hibernate.dialect.OracleDialect }
+eureka:
+  client: { service-url: { defaultZone: http://localhost:8761/eureka } }
+app:
+  jwt:
+    secret: 7f57c9d4c17b456d9d2f829a1c0465cb7f57c9d4c17b456d9d2f829a1c0465cb
+  kafka:
+    topics:
+      order-status: order-status-topic

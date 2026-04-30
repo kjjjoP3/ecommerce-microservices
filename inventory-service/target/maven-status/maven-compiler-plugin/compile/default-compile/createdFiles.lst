@@ -1,0 +1,4 @@
+com\ecommerce\inventory\InventoryServiceApplication.class
+com\ecommerce\inventory\event\OrderStatusEvent.class
+com\ecommerce\inventory\event\OrderStatusEventListener.class
+com\ecommerce\inventory\controller\InventoryController.class
