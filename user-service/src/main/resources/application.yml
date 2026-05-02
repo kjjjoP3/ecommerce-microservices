@@ -1,10 +1,11 @@
 server:
   port: 8082
+
 spring:
   application:
     name: user-service
   datasource:
-    url: jdbc:oracle:thin:@localhost:1521:XE
+    url: jdbc:oracle:thin:@//localhost:1521/XE
     username: ECOM
     password: ECOMPass123
     driver-class-name: oracle.jdbc.OracleDriver
@@ -12,11 +13,15 @@ spring:
     hibernate:
       ddl-auto: none
     properties:
-      hibernate.dialect: org.hibernate.dialect.OracleDialect
-app:
-  jwt:
-    secret: 7f57c9d4c17b456d9d2f829a1c0465cb7f57c9d4c17b456d9d2f829a1c0465cb
+      hibernate:
+        dialect: org.hibernate.dialect.OracleDialect
+    show-sql: true
+
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka
+
+app:
+  jwt:
+    secret: 7f57c9d4c17b456c9d2f829a1c0465cb7f57c9d4c17b456c9d2f829a1c0465cb

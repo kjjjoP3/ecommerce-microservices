@@ -1,9 +1,9 @@
 server:
-  port: 8082
+  port: 8087
 
 spring:
   application:
-    name: user-service
+    name: cart-service
   datasource:
     url: jdbc:oracle:thin:@//localhost:1521/XE
     username: ECOM
@@ -11,7 +11,7 @@ spring:
     driver-class-name: oracle.jdbc.OracleDriver
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.OracleDialect
@@ -21,7 +21,3 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka
-
-app:
-  jwt:
-    secret: 7f57c9d4c17b456c9d2f829a1c0465cb7f57c9d4c17b456c9d2f829a1c0465cb
