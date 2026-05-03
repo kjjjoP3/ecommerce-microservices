@@ -23,7 +23,7 @@ public class OrderService {
 
     public Order savePaidOrder(OrderRequest request) {
         Order order = new Order();
-        order.setCustomerId(request.getCustomerId() == null ? 1L : request.getCustomerId());
+        order.setCustomerId(request.getCustomerId());
         order.setTotalAmount(request.totalAmount().doubleValue());
         order.setStatus("PAID");
         order.setPaymentStatus("PAID");
