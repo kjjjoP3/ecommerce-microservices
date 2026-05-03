@@ -1,3 +1,5 @@
+com\ecommerce\user\config\CorsConfig.class
+com\ecommerce\user\config\CorsConfig$1.class
 com\ecommerce\user\dto\UserResponse.class
 com\ecommerce\user\entity\UserProfile.class
 com\ecommerce\user\service\impl\UserServiceImpl.class

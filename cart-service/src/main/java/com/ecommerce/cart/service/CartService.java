@@ -8,8 +8,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class CartService {
     private final CartRepository cartRepository;
 
@@ -22,6 +24,8 @@ public class CartService {
     }
 
     public List<CartItem> addItem(String username, CartItem item) {
+        validateItem(item);
+
         Cart cart = getOrCreateCart(username);
         cart.getItems().stream()
                 .filter(existing -> existing.getProductId().equals(item.getProductId()))
@@ -40,15 +44,27 @@ public class CartService {
     }
 
     public List<CartItem> updateQty(String username, Long productId, Integer quantity) {
+        if (quantity == null || quantity <= 0) {
+            throw new IllegalArgumentException("Quantity must be greater than 0");
+        }
+
         Cart cart = getOrCreateCart(username);
-        cart.getItems().stream().filter(item -> item.getProductId().equals(productId)).findFirst().ifPresent(item -> item.setQuantity(quantity));
+        CartItemEntity item = cart.getItems().stream()
+                .filter(existing -> existing.getProductId().equals(productId))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Cart item not found: productId=" + productId));
+
+        item.setQuantity(quantity);
         cart.setUpdatedAt(LocalDateTime.now());
         return toModelList(cartRepository.save(cart));
     }
 
     public List<CartItem> removeItem(String username, Long productId) {
         Cart cart = getOrCreateCart(username);
-        cart.getItems().removeIf(item -> item.getProductId().equals(productId));
+        boolean removed = cart.getItems().removeIf(item -> item.getProductId().equals(productId));
+        if (!removed) {
+            throw new IllegalArgumentException("Cart item not found: productId=" + productId);
+        }
         cart.setUpdatedAt(LocalDateTime.now());
         return toModelList(cartRepository.save(cart));
     }
@@ -67,6 +83,24 @@ public class CartService {
             cart.setUpdatedAt(LocalDateTime.now());
             return cartRepository.save(cart);
         });
+    }
+
+    private void validateItem(CartItem item) {
+        if (item == null) {
+            throw new IllegalArgumentException("Cart item must not be null");
+        }
+        if (item.getProductId() == null) {
+            throw new IllegalArgumentException("productId must not be null");
+        }
+        if (item.getName() == null || item.getName().isBlank()) {
+            throw new IllegalArgumentException("name must not be blank");
+        }
+        if (item.getAmount() == null || item.getAmount() < 0) {
+            throw new IllegalArgumentException("amount must be greater than or equal to 0");
+        }
+        if (item.getQuantity() == null || item.getQuantity() <= 0) {
+            throw new IllegalArgumentException("quantity must be greater than 0");
+        }
     }
 
     private CartItem toModel(CartItemEntity entity) {

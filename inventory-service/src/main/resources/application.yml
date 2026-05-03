@@ -5,7 +5,7 @@ spring:
   application:
     name: inventory-service
   datasource:
-    url: jdbc:oracle:thin:@//localhost:1521/XE
+    url: jdbc:oracle:thin:@localhost:1521:XE
     username: ECOM
     password: ECOMPass123
     driver-class-name: oracle.jdbc.OracleDriver

@@ -1,11 +1,14 @@
 com\ecommerce\auth\dto\LoginResponse.class
 com\ecommerce\auth\service\impl\AuthServiceImpl.class
+com\ecommerce\auth\config\CorsConfig$1.class
+com\ecommerce\auth\dto\RegisterRequest.class
+com\ecommerce\auth\security\JwtTokenProvider.class
 com\ecommerce\auth\entity\AppUser.class
 com\ecommerce\auth\exception\GlobalExceptionHandler.class
 com\ecommerce\auth\controller\AuthController.class
 com\ecommerce\auth\dto\LoginRequest.class
 com\ecommerce\auth\repository\AppUserRepository.class
 com\ecommerce\auth\service\AuthService.class
-com\ecommerce\auth\security\JwtTokenProvider.class
+com\ecommerce\auth\config\CorsConfig.class
 com\ecommerce\auth\AuthServiceApplication.class
 com\ecommerce\auth\config\SecurityConfig.class

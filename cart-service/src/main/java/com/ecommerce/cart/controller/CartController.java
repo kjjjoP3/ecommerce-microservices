@@ -26,12 +26,12 @@ public class CartController {
     }
 
     @PutMapping("/items/{productId}")
-    public List<CartItem> updateQty(@RequestHeader(value = "X-User-Name", required = false) String username, @PathVariable Long productId, @RequestParam Integer quantity) {
+    public List<CartItem> updateQty(@RequestHeader(value = "X-User-Name", required = false) String username, @PathVariable("productId") Long productId, @RequestParam("quantity") Integer quantity) {
         return cartService.updateQty(resolveUser(username), productId, quantity);
     }
 
     @DeleteMapping("/items/{productId}")
-    public List<CartItem> removeItem(@RequestHeader(value = "X-User-Name", required = false) String username, @PathVariable Long productId) {
+    public List<CartItem> removeItem(@RequestHeader(value = "X-User-Name", required = false) String username, @PathVariable("productId") Long productId) {
         return cartService.removeItem(resolveUser(username), productId);
     }
 

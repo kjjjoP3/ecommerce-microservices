@@ -5,7 +5,7 @@ spring:
   application:
     name: order-service
   datasource:
-    url: jdbc:oracle:thin:@//localhost:1521/XE
+    url: jdbc:oracle:thin:@localhost:1521:XE
     username: ECOM
     password: ECOMPass123
     driver-class-name: oracle.jdbc.OracleDriver
@@ -21,10 +21,14 @@ spring:
     template:
       default-topic: order-status-topic
     producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
-        spring.json.add.type.headers: true
-    properties:
-      spring.json.trusted.packages: "com.ecommerce.order.event,com.ecommerce.inventory.event,com.ecommerce.payment.event,com.ecommerce.*"
+        spring.json.trusted.packages: "com.ecommerce.order.event,com.ecommerce.inventory.event,com.ecommerce.payment.event,com.ecommerce.*"
+        spring.json.use.type.headers: true
 
 app:
   kafka:

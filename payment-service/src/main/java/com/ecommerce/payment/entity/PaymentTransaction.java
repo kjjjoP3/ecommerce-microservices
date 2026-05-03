@@ -8,7 +8,8 @@ import java.time.LocalDateTime;
 @Table(name = "PAYMENT_TRANSACTION")
 public class PaymentTransaction {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "payment_transaction_seq")
+    @SequenceGenerator(name = "payment_transaction_seq", sequenceName = "PAYMENT_TRANSACTION_SEQ", allocationSize = 1)
     private Long id;
 
     @Column(name = "ORDER_ID", nullable = false)

@@ -1,4 +1,7 @@
 com\ecommerce\inventory\InventoryServiceApplication.class
-com\ecommerce\inventory\event\OrderStatusEvent.class
 com\ecommerce\inventory\event\OrderStatusEventListener.class
 com\ecommerce\inventory\controller\InventoryController.class
+com\ecommerce\inventory\config\CorsConfig.class
+com\ecommerce\inventory\config\SecurityConfig.class
+com\ecommerce\inventory\event\OrderStatusEvent.class
+com\ecommerce\inventory\config\CorsConfig$1.class

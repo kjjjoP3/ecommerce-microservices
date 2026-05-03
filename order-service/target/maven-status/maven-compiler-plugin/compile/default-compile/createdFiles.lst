@@ -1,4 +1,7 @@
 com\ecommerce\order\event\OrderStatusEvent.class
+com\ecommerce\order\config\SecurityConfig.class
+com\ecommerce\order\config\CorsConfig.class
+com\ecommerce\order\config\CorsConfig$1.class
 com\ecommerce\order\OrderServiceApplication.class
 com\ecommerce\order\controller\OrderController.class
 com\ecommerce\order\service\OrderEventPublisher.class
